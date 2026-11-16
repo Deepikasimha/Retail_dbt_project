@@ -1,0 +1,20 @@
+SELECT
+    ORDER_ID,
+    SUM(PAYMENT_AMOUNT) AS TOTAL_PAYMENT_AMOUNT,
+    COUNT(PAYMENT_ID) AS PAYMENT_COUNT,
+    SUM(
+        CASE
+            WHEN PAYMENT_STATUS = 'SUCCESS'
+            THEN PAYMENT_AMOUNT
+            ELSE 0
+        END
+    ) AS SUCCESSFUL_PAYMENT_AMOUNT,
+    SUM(
+        CASE
+            WHEN PAYMENT_STATUS = 'FAILED'
+            THEN PAYMENT_AMOUNT
+            ELSE 0
+        END
+    ) AS FAILED_PAYMENT_AMOUNT
+FROM {{ ref('stg_payments') }}
+GROUP BY ORDER_ID

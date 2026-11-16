@@ -1,0 +1,7 @@
+SELECT
+    PRODUCT_ID,
+    PRODUCT_NAME,
+    CATEGORY,
+    PRICE,
+    CURRENT_TIMESTAMP() AS DBT_UPDATED_AT
+FROM {{ ref('stg_products') }}
